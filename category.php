@@ -1,12 +1,22 @@
 <?php 
 $page_title="Dashboard";
 $page_name="Dashboard";
-$fname="category.php";
 include('header.php'); 
+$total_doctors = get_doctors_list();
+$total_hospitals = get_hospital_list();
+$total_appointments = get_appointment_list();
+$total_conditions = get_conditions_list();
 
 //getting all records from table start here
 $result = mysqli_query($conn, "Select * FROM exam_categories"); 
 ?>   
+<?php
+// Display success message if added successfully
+if (isset($_GET['s']) && $_GET['s'] == 'success') {
+    echo '<p style="color:green;">Conditions successfully added!</p>';
+}
+?>
+
 <!-- Main content -->
 <!--<section class="content">
 	<div class="row">
@@ -45,17 +55,18 @@ $result = mysqli_query($conn, "Select * FROM exam_categories");
 								    <li><a class="dropdown-item" href="#"><i class="fa-light fa-file-lines"></i> Export HTML</a></li>
 								  </ul>
 								</div>
-								<a href="#" class="btn  btn-primary">Add New category</a>
+								<a href="add_category.php" class="btn  btn-primary">Add New category</a>
 							</div>
 								<div class="table-responsive">
 					  <table id="example1" class="table" cellspacing="0">
 						<thead>
 							<tr>
 								<th>Action</th>
-								<th>Category</th>
-								<th>Description</th>								
+								<th>Exam_category_name</th>
+								<th>Iimage</th>								
+								<th>Description</th>
 								<th>Status</th>
-								<th>ADDED AT</th>
+							    <th>ADDED AT</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -64,9 +75,11 @@ $result = mysqli_query($conn, "Select * FROM exam_categories");
 								  $catid = $ress['id'];
 							?>
 							<tr>
-								<td><a href="edit_category.php?id=<?php echo $catid; ?>" class="text-warning"><i class="fa-light fa-pen-to-square"></i></a> </td>
+								<td><a href="edit_category.php?id=<?php echo $catid; ?>" class="text-warning"><i class="fa-light fa-pen-to-square"></i></a><a href="delete_category.php?id=<?php echo $catid; ?>" class="text-danger" onclick="return confirm('Are you sure you want to delete this category');"><i class="fa-solid fa-trash-can"></i></a> </td>
 								<td><?php echo $ress['exam_category_name']; ?></td>
+								<td><img src="<?php echo $ress['image']; ?>" alt="Category Image" style="width: 100px; height: auto;"></td>
 								<td><?php echo $ress['description']; ?></td>
+								
 								
 								<td>
 									<div class="form-check form-switch">

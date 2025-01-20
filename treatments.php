@@ -1,13 +1,19 @@
 <?php 
-$page_title="Hospital";
-$page_name="Hospital";
-$fname="hospitals.php";
+$page_title = "Treatment";
+$page_name = "Treatment";
+$fname="treatments.php";
+// Include header
 include('header.php'); 
 
-//getting all records from table start here
-$result = mysqli_query($conn, "Select * FROM hospital"); 
-?>   
-<!-- Main content -->
+// Getting all records from the table
+$result = mysqli_query($conn, "SELECT * FROM treatment");
+?>
+<?php
+// Display success message if added successfully
+if (isset($_GET['s']) && $_GET['s'] == 'success') {
+    echo '<p style="color:green;">treatment successfully added!</p>';
+}
+?>
 <section class="content px-2">
 				
 				<div class="row">
@@ -25,7 +31,7 @@ $result = mysqli_query($conn, "Select * FROM hospital");
 									</div>
 							</div>
 							<div class="mainTitle innerTitle mt-3 d-flex align-items-center justify-content-between">
-								<h3>category List </h3>
+								<h3>Treatment </h3>
 								<a href="#" class="btn  ms-auto filterBtn"><i class="fa-light fa-print"></i> Print</a>
 								<div class="dropdown mx-2">
 								  <button class="btn filterBtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,51 +44,55 @@ $result = mysqli_query($conn, "Select * FROM hospital");
 								    <li><a class="dropdown-item" href="#"><i class="fa-light fa-file-lines"></i> Export HTML</a></li>
 								  </ul>
 								</div>
-								<a href="add_hospital.php" class="btn  btn-primary">Add New Hospital</a>
+								<a href="add_treatments.php" class="btn  btn-primary">Add New Treatment</a>
 							</div>
 								<div class="table-responsive">
 					  <table id="example1" class="table" cellspacing="0">
 						<thead>
 							<tr>
-								<th>Action</th>
-								<th>Images</th>
-								<th>Hospital Name</th>
-								<th>Contact No</th>
-								<th>Email</th>								
-								<th>Status</th>
+							<th>Action</th>
+								<th>Nmae</th>
+								<th>images</th>
+								<th>Category_id</th>
 								<th>About</th>
+								<th>Address</th>
 								<th>City</th>
+								<th>Country</th>
+								
+								<th>Status</th>
 								<th>ADDED AT</th>
 							</tr>
 						</thead>
 						<tbody>
 						<?php if ($result && mysqli_num_rows($result) > 0){ ?>
 							<?php while($ress = mysqli_fetch_array($result)){ 
-								  $catid = $ress['id'];
-							?>
-							<tr>
-								<td><a href="edit_hospital.php?id=<?php echo $catid; ?>" class="text-warning"><i class="fa-light fa-pen-to-square"></i></a><a href="delete_hospital.php?id=<?php echo $ress['id']; ?>" class="fa-solid fa-trash-can" onclick="return confirm('Are you sure you want to delete this record?');"></a> </td>
-								<td><div class="treatmentImg"><img src="<?php echo $ress['image']; ?>"></div> </td>
-								<td><?php echo $ress['name']; ?></td>
-								<td><?php echo $ress['contact_no']; ?></td>
-								<td><?php echo $ress['email_address']; ?></td>
+								$catid = $ress['id'];
 								
+							?>
+                                
+							<tr>	
+							    
+							<td><a href="edit_treatments.php?id=<?php echo $catid; ?>" class="text-warning"><i class="fa-light fa-pen-to-square"></i></a><a href="delete_treatments.php?id=<?php echo $catid; ?>" class="text-danger" onclick="return confirm('Are you sure you want to delete this treatments?');"><i class="fa-solid fa-trash-can"></i></a>  </td>
+							<td><?php echo $ress['name']; ?></td>
+							<td><img src="<?php echo $ress['image']; ?>" alt="Treatment Image" style="width: 100px; height: auto;"></td>
+								<td><?php echo $ress['category_id']; ?></td>
+								<td><?php echo $ress['about']; ?></td>
+								<td><?php  echo $ress['address'];?></td>
+								<td><?php  echo $ress['city'];?></td>
+								<td><?php  echo $ress['country'];?></td>
 								<td>
-										<div class="form-check form-switch">
-										  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" <?php if($ress['status']=='active'){ ?>checked<?php } ?>>
-										  <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-										</div>
-
-
+									<div class="form-check form-switch">
+									  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" <?php if($ress['status']=='active'){ ?>checked<?php } ?>>
+									  <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+									</div>
 								</td>
-								<td> <?php echo $ress['about']; ?> </td>
-								<td><?php echo $ress['city']; ?></td>
-								<td><?php echo $ress['created_at']; ?></td>
+								<td>16-03-2023</td>
+								
 							</tr>
-							<?php }
+						<?php }
 						
 						}else{
-							echo "<tr><td colspan='9'>No results found</td></tr>";
+							echo "<tr><td colspan='7'>No results found</td></tr>";
 						}
 
 						?>
@@ -97,5 +107,6 @@ $result = mysqli_query($conn, "Select * FROM hospital");
 		</section>
 
 <?php 
+// Include footer
 include('footer.php'); 
-?> 
+?>

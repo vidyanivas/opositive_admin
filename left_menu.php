@@ -72,6 +72,13 @@
 						<i class="fa-light fa-image"></i> <span> Blogs</span>
 						</a>
 					</li>
+					<li class="menu-item">
+						<a href="review.php" class="menu-link <?php if($fname=='review.php'){ ?>active<?php } ?>">
+						<i class="fa-light fa-star"></i> <span> Review</span>
+						</a>
+					</li>
+					
+					
 					<hr>
 					<li class="menu-item">
 						<a href="settings.php" class="menu-link">

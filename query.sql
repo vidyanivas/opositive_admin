@@ -1,0 +1,1 @@
+ALTER TABLE `blogs` ADD `status` BOOLEAN NOT NULL DEFAULT FALSE AFTER `updated_at`;

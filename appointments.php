@@ -7,7 +7,12 @@ include('header.php');
 //getting all records from table start here
 $result = mysqli_query($conn, "Select * FROM appointment"); 
 ?>   
-
+<?php
+// Display success message if added successfully
+if (isset($_GET['s']) && $_GET['s'] == 'success') {
+    echo '<p style="color:green;">appointments successfully added!</p>';
+}
+?>
    
 <!-- Main content -->
 <!--<section class="content">
@@ -46,17 +51,20 @@ $result = mysqli_query($conn, "Select * FROM appointment");
 								    <li><a class="dropdown-item" href="#"><i class="fa-light fa-file-lines"></i> Export HTML</a></li>
 								  </ul>
 								</div>
+	                            <a href="add_appointments.php" class="btn  btn-primary">Add New Appointment</a>						
 							</div>
 								<div class="table-responsive">
 					  <table id="example1" class="table" cellspacing="0">
 						<thead>
 							<tr>
-								<th>Name</th>
+							<th>Action</th>
+							    <th>Name</th>
 								<th>Contact No</th>
 								<th>Email</th>
-								<th>Time Slot</th>
-								<th>CAse</th>
+								<th>About</th>
 								<th>City</th>
+								<th>Timeslot</th>
+								<th>Country</th>
 								<th>ADDED AT</th>
 							</tr>
 						</thead>
@@ -65,19 +73,26 @@ $result = mysqli_query($conn, "Select * FROM appointment");
 							<?php while($ress = mysqli_fetch_array($result)){ ?>
 							<tr>
 								
+							    <td><a href="edit_appointments.php?id=<?php echo $ress['id']; ?>" class="text-warning">
+                                       <i class="fa-light fa-pen-to-square"></i>
+                                  </a> 
+                                   <a href="appointments.php?delete=<?php echo $ress['id']; ?>" class="text-danger" onclick="return confirm('Are you sure you want to delete this appointment?');">
+                                      <i class="fa-light fa-trash"></i>
+                                    </a> </td>
 								<td><?php echo $ress['name']; ?></td>
 								<td><?php echo $ress['contact_no']; ?></td>
 								<td><?php echo $ress['email']; ?></td>
+								<td><?php echo $ress['about']; ?></td>
+								<td><?php echo $ress['city'];  ?></td>
 								<td><?php echo $ress['timeslot']; ?></td>
-								<td><?php echo $ress['city']; ?></td>
-								<td></td>
-								<td><?php echo $ress['created_at']; ?></td>
+								<td><?php echo $ress['country']; ?></td>
+								<td>16-03-2023</td>
 								
 							</tr>
 						<?php }
 						
 						}else{
-							echo "<tr><td colspan='5'>No results found</td></tr>";
+							echo "<tr><td colspan='9'>No results found</td></tr>";
 						}
 
 						?>

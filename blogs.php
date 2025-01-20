@@ -1,13 +1,26 @@
 <?php 
-$page_title="Hospital";
-$page_name="Hospital";
-$fname="hospitals.php";
+$page_title="Blogs";
+$page_name="Blogs";
+$fname="blogs.php";
 include('header.php'); 
 
 //getting all records from table start here
-$result = mysqli_query($conn, "Select * FROM hospital"); 
+$result = mysqli_query($conn, "Select * FROM blogs"); 
 ?>   
+<?php
+// Display success message if added successfully
+if (isset($_GET['s']) && $_GET['s'] == 'success') {
+    echo '<p style="color:green;">blogs successfully added!</p>';
+}
+?>
 <!-- Main content -->
+<!--<section class="content">
+	<div class="row">
+		<div class="col-md-9"> 9&nbsp;</div>
+		<div class="col-md-3"> 3&nbsp;</div>
+	</div>
+</section>-->
+
 <section class="content px-2">
 				
 				<div class="row">
@@ -25,7 +38,7 @@ $result = mysqli_query($conn, "Select * FROM hospital");
 									</div>
 							</div>
 							<div class="mainTitle innerTitle mt-3 d-flex align-items-center justify-content-between">
-								<h3>category List </h3>
+								<h3>blogs List </h3>
 								<a href="#" class="btn  ms-auto filterBtn"><i class="fa-light fa-print"></i> Print</a>
 								<div class="dropdown mx-2">
 								  <button class="btn filterBtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,20 +51,18 @@ $result = mysqli_query($conn, "Select * FROM hospital");
 								    <li><a class="dropdown-item" href="#"><i class="fa-light fa-file-lines"></i> Export HTML</a></li>
 								  </ul>
 								</div>
-								<a href="add_hospital.php" class="btn  btn-primary">Add New Hospital</a>
+								<a href="add_blogs.php" class="btn  btn-primary">Add New Blog</a>
 							</div>
 								<div class="table-responsive">
 					  <table id="example1" class="table" cellspacing="0">
 						<thead>
 							<tr>
 								<th>Action</th>
-								<th>Images</th>
-								<th>Hospital Name</th>
-								<th>Contact No</th>
-								<th>Email</th>								
+							    <th>Title</th>
+								<th>Image</th>
+								<th>content</th>								
 								<th>Status</th>
-								<th>About</th>
-								<th>City</th>
+                                
 								<th>ADDED AT</th>
 							</tr>
 						</thead>
@@ -61,31 +72,25 @@ $result = mysqli_query($conn, "Select * FROM hospital");
 								  $catid = $ress['id'];
 							?>
 							<tr>
-								<td><a href="edit_hospital.php?id=<?php echo $catid; ?>" class="text-warning"><i class="fa-light fa-pen-to-square"></i></a><a href="delete_hospital.php?id=<?php echo $ress['id']; ?>" class="fa-solid fa-trash-can" onclick="return confirm('Are you sure you want to delete this record?');"></a> </td>
-								<td><div class="treatmentImg"><img src="<?php echo $ress['image']; ?>"></div> </td>
-								<td><?php echo $ress['name']; ?></td>
-								<td><?php echo $ress['contact_no']; ?></td>
-								<td><?php echo $ress['email_address']; ?></td>
+							    <td><a href="edit_blogs.php?id=<?php echo $catid; ?>" class="text-warning"><i class="fa-light fa-pen-to-square"></i></a> <a href="delete_blogs.php?id=<?php echo $catid; ?>" class="text-danger" onclick="return confirm('Are you sure you want to delete this blogs?');"><i class="fa-solid fa-trash-can"></i></a> </td>   
+								<td><?php echo  $ress['title'];?>
 								
-								<td>
-										<div class="form-check form-switch">
-										  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" <?php if($ress['status']=='active'){ ?>checked<?php } ?>>
-										  <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-										</div>
-
-
-								</td>
-								<td> <?php echo $ress['about']; ?> </td>
-								<td><?php echo $ress['city']; ?></td>
-								<td><?php echo $ress['created_at']; ?></td>
+								<td><img src="<?php echo $ress['image']; ?>" alt="blogs Image" style="width: 100px; height: auto;"></td>
+								<td><?php echo $ress['content']; ?></td>
+								 <td><div class='form-check form-switch'><input class='form-check-input' type='checkbox' role='switch' id='flexSwitchCheckChecked' " . ($row['status'] == 'active' ? 'checked' : '') . "><label class='form-check-label' for='flexSwitchCheckChecked'>Active</label></div></td>
+								<td>16-03-2023</td>
+								
+								
+								
 							</tr>
-							<?php }
+						<?php }
 						
 						}else{
-							echo "<tr><td colspan='9'>No results found</td></tr>";
+							echo "<tr><td colspan='4'>No results found</td></tr>";
 						}
 
 						?>
+							
 							
 						</tbody>
 						
